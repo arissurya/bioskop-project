@@ -16,19 +16,29 @@ import Cart from './pages/cart'
 import SettingUser from './pages/settinguser';
 import ManageStudio from './pages/managestudio';
 import History from './pages/history'
+import {TambahCart} from './redux/action/cartAction'
 
 class App extends Component {
  
   state={
-    loading:false
+    loading:true
   }
 
   componentDidMount(){
     var id=localStorage.getItem('dino')
     Axios.get(`${url}users/${id}`)
     .then((res)=>{
+      console.log(res)
       this.props.LoginSuccessAction(res.data)
-      this.setState({loading:false})
+      Axios.get(`${url}orders?userId=${id}`)
+      .then((res1)=>{
+        console.log(res1.data)
+       this.props.TambahCart(res1.data.length)
+       this.setState({loading:false})
+
+      }).catch((err1)=>{
+        console.log(err1)
+      })
     }).catch((err)=>{
       console.log(err)
     }).finally(()=>{
@@ -37,6 +47,9 @@ class App extends Component {
   }
 
   render() { 
+    if(this.state.loading){
+      return <div>loading...</div>
+    }
     return ( 
       <div >
 
@@ -67,4 +80,4 @@ const MapstateToprops=(state)=>{
   }
 }
 
-export default connect(MapstateToprops,{LoginSuccessAction})(App);
+export default connect(MapstateToprops,{LoginSuccessAction,TambahCart})(App);

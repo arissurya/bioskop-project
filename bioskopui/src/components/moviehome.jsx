@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Button } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
+import {Input} from 'reactstrap'
 
 
 
@@ -61,8 +62,14 @@ class MovieHome extends Component {
 
         return (
         <div className='bg-movie'>
-        <div className="judul">
+        <div className="judul ">
             <u><h2>Book Your Movies Now!</h2></u>
+
+        </div>
+        <div style={{marginTop:'40px'}} className='container'>
+       <center>
+       <Input style={{width:'370px', }} placeholder='Search Movie...' type='search'/>
+       </center>
         </div>
                 
        

@@ -110,6 +110,7 @@ class MovieDetail extends Component {
                             <div>
                                 <h3><u>Sinopsis :</u></h3>
                                 <p>{this.state.detaildatamovie.sinopsis}</p>
+                                <p><i>{this.state.detaildatamovie.durasi} Minutes</i></p>
                             </div>
 
                             <div className=' director'>

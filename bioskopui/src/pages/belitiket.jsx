@@ -8,14 +8,16 @@ import {Modal,ModalBody,ModalFooter} from 'reactstrap'
 import Numeral from 'numeral'
 import { Button} from 'react-bootstrap';
 import HeaderHome from '../components/header';
-import {Link} from 'react-router-dom';
+import NotFound from './notfound'
 import cartplus from '../img/cartplus.svg'
+
+
 
 
 class Belitiket extends Component {
     state = {  
         datamovie:{},
-        seats:200,
+        seats:100,
         baris:0,
         booked:[],
         loading:true,
@@ -76,6 +78,7 @@ class Belitiket extends Component {
         this.setState({pilihan:pilihan})
     }
     
+ 
 
     onOrderClick=()=>{
         var userId=this.props.UserId
@@ -91,6 +94,7 @@ class Belitiket extends Component {
             jadwal,
             bayar
         }
+
         Axios.post(`${url}orders`,dataorders)
         .then((res)=>{
             console.log(res.data.id)
@@ -114,6 +118,7 @@ class Belitiket extends Component {
             }).catch((err)=>{
                 console.log(err)
             })
+            
         }).catch((err)=>{
             console.log(err)
         })
@@ -144,6 +149,11 @@ paddingTop:'10px'}}>Jumlah :</p>
             }
         }
         this.setState({pilihan:arr})
+    }
+
+    reloadWindows=()=> {
+        this.setState({openmodalcart:false})
+        window.location.reload()
     }
 
     renderseat=()=>{
@@ -206,11 +216,18 @@ paddingTop:'10px'}}>Jumlah :</p>
         })
     }
     render(){
+        if (this.props.roleUser === "admin" ) {
+            return <NotFound />;
+          }
+        
+
         if(this.props.location.state &&this.props.AuthLog){
             if(this.state.redirecthome){
                 return <Redirect to={'/'}/>
             }
+            if(this.props.UserId){
             return (
+
                 <div>
                     <Modal centered isOpen={this.state.openmodalcart}>
                         <ModalBody>
@@ -223,7 +240,7 @@ paddingTop:'10px'}}>Jumlah :</p>
                         </ModalBody>
                         <ModalFooter>
                             <center>
-                            <Link to='/cart'> <Button variant='success' centered >Lihat Cart</Button></Link>
+                             <a href='/cart'><Button onClick={this.reloadWindows} variant='success' centered >Lihat Cart</Button></a>
                             </center>
                         </ModalFooter>
                     </Modal>
@@ -274,10 +291,11 @@ paddingTop:'10px'}}>Jumlah :</p>
                     </div>
                 </div>
               );
+         }
         }
         return(
             <div>
-                404 not found
+               <NotFound/>
             </div>
         )
     }
@@ -286,7 +304,8 @@ paddingTop:'10px'}}>Jumlah :</p>
 const MapstateToprops=(state)=>{
     return{
         AuthLog:state.Auth.login,
-        UserId:state.Auth.id
+        UserId:state.Auth.id,
+        roleUser:state.Auth.role
     }
 }
 export default connect(MapstateToprops) (Belitiket);

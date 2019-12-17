@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import Axios from 'axios'
 import {connect} from 'react-redux'
-import {Table,ModalHeader,ModalBody,ModalFooter} from 'reactstrap'
+import {Table,Modal, ModalBody,ModalHeader,ModalFooter} from 'reactstrap'
 import {url} from '../ApiUrl/urlapi';
-import FooterHome from '../components/footer';
 import HeaderHome from '../components/header';
 import {Button} from 'react-bootstrap'
+import Numeral from 'numeral'
+import {LoginSuccessAction} from '../redux/action';
+import NotFound from './notfound'
 
 
 
 class Cart extends Component {
     state = {
-        datacart:null
+        datacart:[],
+        cartData:[],
+        modaldetail:false,
+        indexdetail:0
     }
 
     componentDidMount(){
+        
         Axios.get(`${url}orders?_expand=movie&userId=${this.props.UserId}&bayar=false`)
         .then((res)=>{
+            
             var datacart=res.data
             var qtyarr=[]
             console.log(res.data)
@@ -46,64 +53,171 @@ class Cart extends Component {
             console.log(err)
         })
     }
+
+
+    totalharga=()=>{
+        var total=0
+
+        this.state.datacart.map((val)=>{
+            return total+=val.totalharga
+        })
+
+        total='Rp. '+ Numeral(total).format('0,0')+',00' 
+        return total
+        
+    }
+
+    
+    onClickCheckOut=()=>{
+        if(this.state.cartData.length!==0){
+            var data=this.state.cartData
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            var yyyy = today.getFullYear();
+            today = dd + '/' + mm + '/' + yyyy;
+            var objek={tanggal:today,item:data}
+            var transaksicart=this.props.transaksi
+            var arr=[...transaksicart,objek]
+           
+            Axios.post(url+'users/'+this.props.UserId.id,{transactions:arr})
+                .then(()=>{
+                    this.setState({cartData:[]})
+                    Axios.patch(url+'users/'+this.props.UserId.id,{cartData:this.state.transactions})
+                    .then((res)=>{
+                        this.props.OnLoginSuccess(res.data)
+                        alert('tiket sukses anda beli terimakasih')
+                    })
+                })
+        }else{
+            alert('tidak ada tiket yang anda pesan')
+        }
+    }
+
+
     renderCart=()=>{
+       
         if(this.state.datacart!==null){
             if(this.state.datacart.length===0){
                 return (<tr>
-                    <td>belum ada barang di Cart</td>
+                    <td></td>
+                    <td>Cart masih Kosong</td>
                 </tr>)
             }
             return this.state.datacart.map((val,index)=>{
                 return(
                     <tr key={index}>
                         <td style={{width:100}}>{index+1}</td>
-                        <td style={{width:300}}>{val.movie.title}</td>
+                        <td style={{width:800}}>{val.movie.title}</td>
                         <td style={{width:100}}>{val.jadwal}</td>
                         <td style={{width:100}}>{val.qty.length}</td>
-                        <td style={{width:100}}><Button variant='info'>Details</Button></td>
+                        <td style={{width:900}}>{'Rp. '+ Numeral(val.totalharga).format('0,0')+',00' }</td>
+
+                        <td style={{width:100}}><Button  onClick={()=>this.setState({modaldetail:true,indexdetail:index})} variant='info'>Details</Button></td>
+                        <td style={{width:100}}><Button variant='danger'>Cancel</Button></td>
                     </tr>
                 )
             })
         }
     }
     render() {
+        if (this.props.roleUser === "admin") {
+            return <NotFound />;
+          }
         if(this.props.UserId){
             return (
                 <div>
+
+                <Modal centered
+                isOpen={this.state.modaldetail}
+                toggle={() => {
+                  this.setState({ modaldetail: false });
+                }}
+              >
+                <ModalHeader>Details</ModalHeader>
+                <ModalBody>
+                  <Table >
+                    <tbody>
+                      <tr>
+                        <th>No.</th>
+                        <th>Seat</th>
+                        
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      {this.state.datacart !== null && this.state.datacart.length !== 0
+                        ? this.state.datacart[this.state.indexdetail].qty.map((val, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{"abcdefghijklmnopqrstuvwxyz".toUpperCase()[val.row] + [val.seat + 1]}</td>
+                              </tr>
+                            );
+                          })
+                        : null}
+                    </tbody>
+                  </Table>
+                </ModalBody>
+              </Modal>
+
+
+
+
                 <HeaderHome/>
-                    <center style={{marginBottom:'450px'}}>
-                        <Table style={{width:600}} >
+                    <center style={{marginBottom:'50px'}}>
+                        <Table style={{width:900
+                        }} >
                             <thead>
                                 <tr>
                                     <th style={{width:100}}>No.</th>
-                                    <th style={{width:300}}>Title</th>
+                                    <th style={{width:800}}>Title</th>
                                     <th style={{width:100}}>Jadwal</th>
                                     <th style={{width:100}}>Jumlah</th>
+                                    <th style={{width:800}}>Total Harga</th>
                                     <th style={{width:100}}>Detail</th>
+                                    <th style={{width:100}}>Cancel</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.renderCart()}
                             </tbody>
                             <tfoot>
-                                <Button variant='danger'>Checkout</Button>
-                            </tfoot>
+                            <tr>
+                            <td></td>
+                            <td style={{width:900,
+                            fontWeight:'bold'}}>Total Keseluruhan</td>
+                            
+                            <td></td>
+                            <td></td>
+                            <td style={{
+                                fontWeight:'bold'}}>{this.totalharga()}</td>
+                            <td></td>
+                            </tr>
+                            
+                        </tfoot>
                         </Table>
+                        
+                        <Button onClick={this.onClickCheckOut} variant='dark'>Checkout</Button>
                     </center>
-                <FooterHome/>
+                
                 </div>
               );
         }
         return(
-            <div>Loading</div>
+            <div>
+                <NotFound/>
+            </div>
         )
     }
 }
 
-const MapstateToprops=(state)=>{
+const MapstateToprops=state=>{
     return{
         AuthLog:state.Auth.login,
-        UserId:state.Auth.id
+        UserId:state.Auth.id,
+        transaksi:state.Auth.transactions,
+        roleUser:state.Auth.role
     }
 }
-export default connect(MapstateToprops) (Cart);
+export default connect(MapstateToprops,{LoginSuccessAction}) (Cart);

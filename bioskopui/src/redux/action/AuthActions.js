@@ -4,3 +4,11 @@ export const LoginSuccessAction=(datauser)=>{
         payload:datauser
     }
 }
+
+
+export const GantiPassword = passwordbaru => {
+    return {
+      type: "GANTI_PASSWORD",
+      payload: passwordbaru
+    };
+  };

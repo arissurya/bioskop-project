@@ -8,6 +8,7 @@ import {TiShoppingCart} from 'react-icons/ti'
 
 
 
+
 const HeaderHome = (props) => {
   
         return ( 
@@ -16,8 +17,8 @@ const HeaderHome = (props) => {
             <Navbar className='bg-navbar' variant="dark">
             <div className='container'>
             <div className='logoimg'>
-            <a href='/'><img src={imglogo} height='50px'/></a>
-            <h4>MoviesBook</h4> 
+            <a style={{color:'black'}} href='/'><img src={imglogo} height='50px'/>
+            <h4 className='logoawal'>MoviesBook</h4> </a>
             </div>
             
             <div>
@@ -65,7 +66,7 @@ const HeaderHome = (props) => {
             }
             {
               props.roleUser==='user'?
-              <Link to='/cart'><p><Button variant='outline-dark'><TiShoppingCart color='black' /><span>12</span></Button></p></Link>
+              <Link to='/cart'><p><Button variant='outline-dark'><TiShoppingCart color='black' /><span>{props.carts}</span></Button></p></Link>
               :
               
               null
@@ -81,7 +82,7 @@ const HeaderHome = (props) => {
              }}>
                 
                 <NavDropdown title={` ${props.namauser}`} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/history">Setting</NavDropdown.Item>
+                  <NavDropdown.Item href="/settinguser">Setting</NavDropdown.Item>
                   <NavDropdown.Item href='/' onClick={()=>onSignOutClick()}>Logout</NavDropdown.Item>
                   
                 </NavDropdown>
@@ -109,7 +110,8 @@ const onSignOutClick=()=>{
 const MapstateToprops=(state)=>{
   return{
       namauser:state.Auth.username,
-      roleUser:state.Auth.role
+      roleUser:state.Auth.role,
+      carts:state.Auth.cart
     
 
   }
