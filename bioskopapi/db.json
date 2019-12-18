@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "password": "123",
+      "password": "admin",
       "username": "admin",
       "role": "admin",
       "id": 1
@@ -54,19 +54,29 @@
   ],
   "studios": [
     {
-      "id": 1,
-      "nama": "Studio 1",
-      "jumlahKursi": 260
+      "nama": "Studio Ambyar Kabeh",
+      "jumlahKursi": "250",
+      "id": 1
     },
     {
-      "id": 2,
-      "nama": "Studio 2",
-      "jumlahKursi": 240
+      "nama": "Studio Bubar ambyar",
+      "jumlahKursi": "250",
+      "id": 2
     },
     {
-      "id": 3,
-      "nama": "Studio 3",
-      "jumlahKursi": 200
+      "nama": "Studio Kunkainap",
+      "jumlahKursi": "240",
+      "id": 3
+    },
+    {
+      "nama": "Studio Kanhaimin",
+      "jumlahKursi": "260",
+      "id": 4
+    },
+    {
+      "nama": "Studio BrokenHeart",
+      "jumlahKursi": "250",
+      "id": 5
     }
   ],
   "movies": [
@@ -84,7 +94,7 @@
         14
       ],
       "trailer": "https://www.youtube.com/embed/F6QaLsw8EWY",
-      "studioId": "1",
+      "studioId": "5",
       "id": 1
     },
     {
@@ -101,11 +111,10 @@
         14,
         16,
         18,
-        20,
-        22
+        20
       ],
       "trailer": "https://www.youtube.com/embed/8Qn_spdM5Zg",
-      "studioId": "1",
+      "studioId": "3",
       "id": 2
     },
     {
@@ -122,7 +131,7 @@
         16
       ],
       "trailer": "https://www.youtube.com/embed/zyYgDtY2AMY",
-      "studioId": "1",
+      "studioId": "2",
       "id": 4
     },
     {
@@ -159,7 +168,7 @@
         22
       ],
       "trailer": "https://www.youtube.com/embed/ljKzFGpPHhw",
-      "studioId": "1",
+      "studioId": "5",
       "id": 6
     },
     {
@@ -176,24 +185,8 @@
         20
       ],
       "trailer": "https://www.youtube.com/embed/FtSd844cI7U",
-      "studioId": "1",
+      "studioId": "3",
       "id": 8
-    },
-    {
-      "title": "Habibie & Ainun",
-      "image": "https://cdn0-production-images-kly.akamaized.net/5xwtf0TfGw8ittH947N_VbMmfRY=/0x0:405x540/640x853/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/2984776/original/008944300_1575347256-Habibie_Ainun_3.jpg",
-      "imgHeader": "https://id.bmscdn.com/events/showcasesynopsis/ET00007142.jpg",
-      "sinopsis": "HABIBIE & AINUN 3 merupakan film drama yang disutradarai oleh Hanung Bramantyo. Kisah Ainun sebagaimana remaja di usianya ,punya kisah kasih yang cukup unik, menggelitik dan menarik. Saat di SMA, Ainun dikenal sebagai sosok cerdas yang menjadi pujaan di sekolahnya dan menjadi incaran banyak siswa laki-laki, termasuk Habibie. Hubungan mereka bermula dari sebuah pertemanan. Di bangku kuliah Ainun, Sebagai mahasiswi kedokteran menjadi sosok yang popular di lingkungan kampusnya dan menjadi sosok dambaan setiap pria.  Dibintangi oleh Reza Rahadian, Maudy Ayunda, Jefri Nichol, Aghniny Haque. Beli tiket bioskop online kamu di BookMyShow.",
-      "sutradara": "Hanung Bramantyo",
-      "genre": "Drama",
-      "durasi": "123",
-      "produksi": "RANS ENTERTAINMENT",
-      "jadwal": [
-        22
-      ],
-      "trailer": "https://www.youtube.com/embed/7uV166LCp10",
-      "studioId": "1",
-      "id": 9
     },
     {
       "title": "Black Christmas",
@@ -209,8 +202,22 @@
         20
       ],
       "trailer": "https://www.youtube.com/embed/DH-9_6Eg-qc",
-      "studioId": "1",
+      "studioId": "2",
       "id": 10
+    },
+    {
+      "title": "Dabangg 3",
+      "image": "https://id.bmscdn.com/events/Large/ET00007254.jpg",
+      "imgHeader": "https://id.bmscdn.com/events/showcasesynopsis/ET00007254.jpg",
+      "sinopsis": "DABANGG 3 merupakan film aksi India yang disutradarai oleh Prabhu Deva. Inspektur polisi yang selalu beruntung, danpemberani, Chulbul Pandey, kembali lagi untuk menghadapi Bali Singh, seorang penjahat yang mengganggu, dan merusak hidup orang banyak.\n\nDibintangi oleh Salman Khan, Arbaaz Khan, Nikhil Dwivedi. Beli tiket bioskop online kamu di BookMyShow.",
+      "sutradara": "Prabhu Deva",
+      "genre": "Action",
+      "durasi": "203",
+      "produksi": "RANS ENTERTAINMENT",
+      "jadwal": [],
+      "trailer": "https://www.youtube.com/embed/-AJ7cLi1Jfk",
+      "studioId": "1",
+      "id": 11
     }
   ],
   "orders": [
@@ -317,6 +324,86 @@
       "jadwal": 12,
       "bayar": false,
       "id": 13
+    },
+    {
+      "userId": 8,
+      "movieId": 1,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 14
+    },
+    {
+      "userId": 5,
+      "movieId": 1,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 15
+    },
+    {
+      "userId": 5,
+      "movieId": 10,
+      "totalharga": 50000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 16
+    },
+    {
+      "userId": 5,
+      "movieId": 4,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 17
+    },
+    {
+      "userId": 5,
+      "movieId": 5,
+      "totalharga": 50000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 18
+    },
+    {
+      "userId": 5,
+      "movieId": 6,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 19
+    },
+    {
+      "userId": 5,
+      "movieId": 8,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 20
+    },
+    {
+      "userId": 5,
+      "movieId": 10,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 21
+    },
+    {
+      "userId": 4,
+      "movieId": 1,
+      "totalharga": 50000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 22
+    },
+    {
+      "userId": 4,
+      "movieId": 1,
+      "totalharga": 25000,
+      "jadwal": 12,
+      "bayar": false,
+      "id": 23
     }
   ],
   "ordersDetails": [
@@ -439,6 +526,84 @@
       "seat": 3,
       "row": 0,
       "id": 20
+    },
+    {
+      "orderId": 14,
+      "seat": 4,
+      "row": 0,
+      "id": 21
+    },
+    {
+      "orderId": 15,
+      "seat": 5,
+      "row": 0,
+      "id": 22
+    },
+    {
+      "orderId": 16,
+      "seat": 0,
+      "row": 0,
+      "id": 23
+    },
+    {
+      "orderId": 16,
+      "seat": 1,
+      "row": 0,
+      "id": 24
+    },
+    {
+      "orderId": 17,
+      "seat": 8,
+      "row": 0,
+      "id": 25
+    },
+    {
+      "orderId": 18,
+      "seat": 0,
+      "row": 0,
+      "id": 26
+    },
+    {
+      "orderId": 18,
+      "seat": 1,
+      "row": 0,
+      "id": 27
+    },
+    {
+      "orderId": 19,
+      "seat": 0,
+      "row": 0,
+      "id": 28
+    },
+    {
+      "orderId": 20,
+      "seat": 13,
+      "row": 0,
+      "id": 29
+    },
+    {
+      "orderId": 21,
+      "seat": 8,
+      "row": 0,
+      "id": 30
+    },
+    {
+      "orderId": 22,
+      "seat": 8,
+      "row": 0,
+      "id": 31
+    },
+    {
+      "orderId": 22,
+      "seat": 9,
+      "row": 0,
+      "id": 32
+    },
+    {
+      "orderId": 23,
+      "seat": 12,
+      "row": 0,
+      "id": 33
     }
   ],
   "transactions": [],

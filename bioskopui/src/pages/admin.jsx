@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HeaderAdmin from '../components/header.admin';
+import HeaderHome from '../components/header';
 import Dashboard from '../components/dashboard'
 import FooterAdmin from '../components/footer.admin';
 import {LoginSuccessAction} from '../redux/action';
@@ -9,24 +9,31 @@ import {connect} from 'react-redux'
 
 class AdminPage extends Component {
     state = {  }
-    render() 
-    { 
+
+
+    render() { 
         if (this.props.roleUser === "user") {
             return <NotFound />;
-          } else {
-
+          } 
+        if(this.props.UserId) {
         return ( 
            
             <div>
-                <HeaderAdmin/>
+                <HeaderHome/>
                 <Dashboard/>
                 <FooterAdmin/>
             </div>
          
          );
-          }    
+        } 
+        return(
+            <div>
+                <NotFound/>
+            </div>
+        )
+    }    
 }
-}
+
 
 const MapstateToprops=state=>{
     return{

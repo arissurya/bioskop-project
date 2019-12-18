@@ -22,6 +22,7 @@ class LoginPage extends Component {
           if(res.data.length){
               localStorage.setItem('dino',res.data[0].id)
               this.props.LoginSuccessAction(res.data[0])
+              window.location.reload()
           }else{
               this.setState({error:'Password is not match'})
           }

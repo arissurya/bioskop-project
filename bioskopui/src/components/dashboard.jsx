@@ -20,7 +20,11 @@ class Dashboard extends Component {
      componentDidMount(){
         Axios.get(`${url}movies`)
         .then((res)=>{
-            this.setState({dataMovies:res.data})
+            Axios.get(`${url}studios`)
+            .then((res1)=>{
+
+                this.setState({dataMovies:res.data, datastudio:res1.data})
+            })
         })
         .catch((err)=>{
             console.log(err)
@@ -250,10 +254,11 @@ class Dashboard extends Component {
 
 
     render() { 
+        console.log('datastudio',this.state.datastudio)
         const {dataMovies,indexedit}=this.state
         const {length}=dataMovies
         if(length===0){
-            return <div>jancookk</div>
+            return <div>loading</div>
         }
 
         return ( 
@@ -274,10 +279,14 @@ class Dashboard extends Component {
                             {this.renderEditCheckbox(indexedit)}
                         </div>
                         <input type="text" defaultValue={dataMovies[indexedit].trailer} ref='edittrailer' placeholder='trailer'className='form-control mt-2' />
-                        <select ref='editstudio' className='form-control mt-2'>
-                            <option value="1">Studio 1</option>    
-                            <option value="2">Studio 2</option>    
-                            <option value="3">Studio 3</option>    
+                        <select ref='editstudio'  defaultValue={dataMovies[indexedit].studioId} className='form-control mt-2'>
+                        {
+                            this.state.datastudio.map((val)=>{
+                                return(
+                                    <option value={val.id}>{val.nama}</option>
+                                )
+                            })
+                        }  
                         </select> 
                         <input type="text" defaultValue={dataMovies[indexedit].sutradara}  ref='editsutradara' placeholder='sutradara' className='form-control mt-2'/>
                         <input type="number" defaultValue={dataMovies[indexedit].durasi}  ref='editdurasi' placeholder='durasi' className='form-control mt-2'/>
@@ -306,9 +315,13 @@ class Dashboard extends Component {
                 </div>
                 <input type="text" ref='trailer' placeholder='Trailer' className='form-control mt-2' />
                 <select ref='studio' className='form-control mt-2'>
-                    <option value="1">Studio 1</option>    
-                    <option value="2">Studio 2</option>    
-                    <option value="3">Studio 3</option>    
+                {
+                    this.state.datastudio.map((val)=>{
+                        return(
+                            <option value={val.id}>{val.nama}</option>
+                        )
+                    })
+                }   
                 </select> 
                 <input type="text"  ref='sutradara' placeholder='Sutradara' className='form-control mt-2'/>
                 <input type="number"  ref='durasi' placeholder='Durasi' className='form-control mt-2'/>
@@ -319,7 +332,7 @@ class Dashboard extends Component {
                 <Button variant="success" onClick={this.onSaveAddDataClick}>Save</Button>
                 <Button variant="danger" onClick={()=>this.setState({modaladd:false})}>Cancel</Button>
             </ModalFooter>
-        </Modal>
+            </Modal>
 
 
 

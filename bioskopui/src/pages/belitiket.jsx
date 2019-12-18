@@ -17,7 +17,7 @@ import cartplus from '../img/cartplus.svg'
 class Belitiket extends Component {
     state = {  
         datamovie:{},
-        seats:100,
+        seats:200,
         baris:0,
         booked:[],
         loading:true,
@@ -78,7 +78,9 @@ class Belitiket extends Component {
         this.setState({pilihan:pilihan})
     }
     
- 
+    onResetSeat=()=>{
+        this.setState({pilihan:[]})
+    }
 
     onOrderClick=()=>{
         var userId=this.props.UserId
@@ -265,16 +267,24 @@ paddingTop:'10px'}}>Jumlah :</p>
                             <div>
 
                             {
-                                this.state.pilihan.length?
+                                
                                 this.renderHargadanQuantity()
+                               
+                            }
+
+                                {this.state.pilihan.length?
+                                <button onClick={this.onOrderClick} className='btn btn-primary mr-3 mt-3'>Order</button>
                                 :
                                 null
                             }
 
-                                {this.state.pilihan.length?<button onClick={this.onOrderClick} className='btn btn-primary mt-3'>Order</button> 
+                            {this.state.pilihan.length?
+                                <button onClick={this.onResetSeat} className='btn btn-warning mt-3'>Reset Seat</button>
                                 :
                                 null
-                                }
+                            }
+                           
+                            
                             </div>
                             
                         
@@ -295,7 +305,7 @@ paddingTop:'10px'}}>Jumlah :</p>
         }
         return(
             <div>
-               <NotFound/>
+              <NotFound/>
             </div>
         )
     }

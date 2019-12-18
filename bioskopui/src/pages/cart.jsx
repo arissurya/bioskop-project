@@ -67,32 +67,6 @@ class Cart extends Component {
         
     }
 
-    
-    onClickCheckOut=()=>{
-        if(this.state.cartData.length!==0){
-            var data=this.state.cartData
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-            var yyyy = today.getFullYear();
-            today = dd + '/' + mm + '/' + yyyy;
-            var objek={tanggal:today,item:data}
-            var transaksicart=this.props.transaksi
-            var arr=[...transaksicart,objek]
-           
-            Axios.post(url+'users/'+this.props.UserId.id,{transactions:arr})
-                .then(()=>{
-                    this.setState({cartData:[]})
-                    Axios.patch(url+'users/'+this.props.UserId.id,{cartData:this.state.transactions})
-                    .then((res)=>{
-                        this.props.OnLoginSuccess(res.data)
-                        alert('tiket sukses anda beli terimakasih')
-                    })
-                })
-        }else{
-            alert('tidak ada tiket yang anda pesan')
-        }
-    }
 
 
     renderCart=()=>{
@@ -109,6 +83,7 @@ class Cart extends Component {
                     <tr key={index}>
                         <td style={{width:100}}>{index+1}</td>
                         <td style={{width:800}}>{val.movie.title}</td>
+                        <td style={{width:800}}>{val.movie.studioId}</td>
                         <td style={{width:100}}>{val.jadwal}</td>
                         <td style={{width:100}}>{val.qty.length}</td>
                         <td style={{width:900}}>{'Rp. '+ Numeral(val.totalharga).format('0,0')+',00' }</td>
@@ -171,6 +146,7 @@ class Cart extends Component {
                                 <tr>
                                     <th style={{width:100}}>No.</th>
                                     <th style={{width:800}}>Title</th>
+                                    <th style={{width:800}}>Nama Studio</th>
                                     <th style={{width:100}}>Jadwal</th>
                                     <th style={{width:100}}>Jumlah</th>
                                     <th style={{width:800}}>Total Harga</th>
